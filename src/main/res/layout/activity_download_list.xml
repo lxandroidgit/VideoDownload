@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:topbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/download_top_layout" />
+
+    <com.example.sniffer.httpdownload.View.ViewPagerIndicator
+        android:id="@+id/download_list_indicator"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        topbar:leftText="正在下载"
+        topbar:leftTextColor="#ff000000"
+        topbar:leftTextSize="6sp"
+        topbar:rightText="已下载"
+        topbar:rightTextColor="#ff000000"
+        topbar:rightTextSize="6sp">
+
+    </com.example.sniffer.httpdownload.View.ViewPagerIndicator>
+
+    <LinearLayout
+        android:id="@+id/ll_download_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_delete_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#90CDCDCD"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_selectAll"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_delete_task"
+            android:text="全选"
+            android:textColor="@drawable/selector_blue_white" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_delete_task"
+            android:text="删除"
+            android:textColor="#808080" />
+    </LinearLayout>
+</LinearLayout>

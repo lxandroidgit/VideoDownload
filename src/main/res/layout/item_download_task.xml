@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:descendantFocusability="blocksDescendants">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp">
+
+        <CheckBox
+            android:id="@+id/cb_delete_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/ff_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/cb_delete_select">
+
+            <ImageView
+                android:id="@+id/iv_task_icon"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_task_scond"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:gravity="center"
+                android:textColor="#FF00FF"
+                android:visibility="invisible" />
+
+
+        </FrameLayout>
+
+        <com.example.sniffer.httpdownload.View.marqueeTextView
+            android:id="@+id/tv_task_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/pb_task_progcess"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/ff_task"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:text="123"
+            android:textColor="#0000FF" />
+
+        <com.example.sniffer.httpdownload.View.MyProgressBar
+            android:id="@+id/pb_task_progcess"
+            style="@style/ProgressBar_Mini"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_task_State"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/ff_task" />
+
+
+        <TextView
+            android:id="@+id/tv_task_State"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ff_task"
+            android:layout_toEndOf="@+id/ff_task"
+            android:layout_weight="111"
+            android:text="正在下载"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_task_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ff_task"
+            android:layout_toEndOf="@+id/ff_task"
+            android:layout_weight="111"
+            android:gravity="right"
+            android:text="12.58 M/23.58 M"
+            android:textColor="#FF0000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</LinearLayout>

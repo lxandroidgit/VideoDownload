@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="111">
+
+        <com.example.sniffer.httpdownload.View.PullToRefreshGridView
+            android:id="@+id/gv_video_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:horizontalSpacing="5dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="无网络连接"
+            android:textColor="#FF0000"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/pb_video_show_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+</LinearLayout>

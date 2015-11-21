@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="10dp">
+
+    <CheckBox
+        android:id="@+id/cb_video_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_videoimage"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_toRightOf="@+id/cb_video_select"
+        android:background="@mipmap/ic_launcher" />
+
+
+    <com.example.sniffer.httpdownload.View.marqueeTextView
+        android:id="@+id/tv_videoname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_videoimage"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/iv_videoimage"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="我是视频名字"
+        android:textColor="@color/blue"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_videosize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_videotime"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/iv_videoimage"
+        android:text="80M" />
+
+    <TextView
+        android:id="@+id/tv_videotime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_videoimage"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/iv_videoimage"
+        android:text="时长:107分钟" />
+
+</RelativeLayout>

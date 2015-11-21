@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@mipmap/title_bar"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="小电影"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_data_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="第1页"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_download_list"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="下载列表"
+        android:textColor="@drawable/btn_download_list"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+</LinearLayout>
