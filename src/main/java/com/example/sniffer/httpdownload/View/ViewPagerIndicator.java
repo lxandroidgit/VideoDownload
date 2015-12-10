@@ -1,18 +1,18 @@
 package com.example.sniffer.httpdownload.View;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +27,7 @@ public class ViewPagerIndicator extends LinearLayout {
     private int mLeft; // 指示符的所在控件的X;
     private int mWidth; // 指示符的宽度
     private int mHeight = 8; // 指示符的高度
-    private boolean position = false;
+    private boolean position ;
 
     private TextView leftTextView;
     private TextView rightTextView;
@@ -41,12 +41,14 @@ public class ViewPagerIndicator extends LinearLayout {
     private float rightTextSize;
     private onClickText listener;
 
-    private LinearLayout.LayoutParams leftLayoutParams, rightLayoutParams;
+    private LinearLayout.LayoutParams  layoutParams;
+    private final String INSTANCE_STATUS = "instance_status";
+    private final String STATUS_POSITION = "status_position";
 
     public interface onClickText {
-        void onClickLeftText();
+        void onClickLeftText(boolean position);
 
-        void onClickRightText();
+        void onClickRightText(boolean position);
     }
 
     public void setOnClickTextListener(onClickText listener) {
@@ -86,22 +88,19 @@ public class ViewPagerIndicator extends LinearLayout {
 
         setBackgroundColor(Color.WHITE);
         //给自定义控件设置布局并加载
-        leftLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        leftLayoutParams.weight = 1;
-        addView(leftTextView, leftLayoutParams);
-        rightLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        rightLayoutParams.weight = 1;
-        addView(rightTextView, rightLayoutParams);
+        layoutParams.weight = 1;
+        addView(leftTextView, layoutParams);
+        addView(rightTextView, layoutParams);
 
         leftTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onClickLeftText();
-                }
                 position = false;
+                if (listener != null) {
+                    listener.onClickLeftText(position);
+                }
                 isPosition();
                 invalidate();
             }
@@ -110,10 +109,10 @@ public class ViewPagerIndicator extends LinearLayout {
         rightTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onClickRightText();
-                }
                 position = true;
+                if (listener != null) {
+                    listener.onClickRightText(position);
+                }
                 isPosition();
                 invalidate();
             }
@@ -141,6 +140,12 @@ public class ViewPagerIndicator extends LinearLayout {
         }
     }
 
+    /**
+     * 测量控件
+     *
+     * @param widthMeasureSpec
+     * @param heightMeasureSpec
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -151,6 +156,10 @@ public class ViewPagerIndicator extends LinearLayout {
         setMeasuredDimension(width, height);
     }
 
+    /**
+     * 绘制控件
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -158,4 +167,35 @@ public class ViewPagerIndicator extends LinearLayout {
         Rect rect = new Rect(mLeft, mTop, mLeft + mWidth, mTop + mHeight);
         canvas.drawRect(rect, mPaint);
     }
+
+    /**
+     * 回收前保存状态
+     *
+     * @return
+     */
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(INSTANCE_STATUS, super.onSaveInstanceState());
+        bundle.putBoolean(STATUS_POSITION, position);
+        return bundle;
+    }
+
+    /**
+     * 重启后取出状态
+     *
+     * @param state
+     */
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+            position = bundle.getBoolean(STATUS_POSITION);
+            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATUS));
+            Log.e(getClass() + "", "onRestoreInstanceState:" + position);
+            return;
+        }
+        super.onRestoreInstanceState(state);
+    }
+
 }

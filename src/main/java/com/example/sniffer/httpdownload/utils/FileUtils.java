@@ -1,17 +1,13 @@
 package com.example.sniffer.httpdownload.utils;
 
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
-
-import com.example.sniffer.httpdownload.bean.VideoFileInfo;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,6 +78,7 @@ public class FileUtils {
      */
     public Bitmap getBitmap(String fileName) {
         File videoImage = new File(getStorageDirectory() + File.separator + fileName);
+        Log.i("getBitmap", videoImage.getPath());
         if (videoImage.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(videoImage.getPath());
             return bitmap;

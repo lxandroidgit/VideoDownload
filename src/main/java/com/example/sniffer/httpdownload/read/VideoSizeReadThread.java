@@ -45,7 +45,7 @@ public class VideoSizeReadThread {
         mSizeTask = new HashSet<>();
         //获取最大可用内存
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
-        int sizeCache = maxMemory / 10;
+        int sizeCache = maxMemory / 16;
         mSizeCache = new LruCache<String, Integer>(sizeCache) {
 
             @Override
@@ -177,7 +177,7 @@ public class VideoSizeReadThread {
 
         @Override
         public void run() {
-            int size = readsize(videoinfo.getVideoMp4Url());
+            int size = readsize( videoinfo.getVideoMp4Url());
             Message msg = handler.obtainMessage();
             msg.what = 1;
             Bundle bundle = new Bundle();

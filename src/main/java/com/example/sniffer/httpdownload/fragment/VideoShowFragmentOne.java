@@ -1,6 +1,8 @@
 package com.example.sniffer.httpdownload.fragment;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.sniffer.httpdownload.R;
 import com.example.sniffer.httpdownload.View.PullToRefreshGridView;
@@ -22,10 +26,6 @@ import com.example.sniffer.httpdownload.bean.VideoDownInfo;
 import com.example.sniffer.httpdownload.dao.VideoUrlDao;
 import com.example.sniffer.httpdownload.download.InitDataThread;
 import com.example.sniffer.httpdownload.utils.FileUtils;
-
-import android.widget.FrameLayout.LayoutParams;
-import android.widget.TextView;
-
 import com.example.sniffer.httpdownload.utils.Key;
 
 import java.lang.ref.WeakReference;
@@ -64,7 +64,6 @@ public class VideoShowFragmentOne extends Fragment {
                     case Key.UP_VIDEO_DATA:
                         if (list != null && list.size() > 0) {
                             if (adapter == null) {
-                                Log.i("适配器", "新的加载");
                                 pb_video_show_one.setVisibility(View.INVISIBLE);
                                 adapter = new VideoAdapterOne(activity, list, R.layout.item_data, gv_video_one);
                                 gv_video_one.setAdapter(adapter);
@@ -110,6 +109,8 @@ public class VideoShowFragmentOne extends Fragment {
     }
 
     private void initData() {
+        SharedPreferences sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
+        Key.VIDEO_ALL_URL = sp.getString("homeUrl", " ");
         Key.totalnumber = videoUrlDao.findTotalNumber();
         if (Key.totalnumber > 0) {
             list = videoUrlDao.getVideoUrl(number);
@@ -162,7 +163,7 @@ public class VideoShowFragmentOne extends Fragment {
                 } else {
                     if (isQuray) {
                         int page = number / 30 + 1;
-                        new InitDataThread(getActivity(), mHandler, page, Key.UP_VIDEO_DATA).start();
+                        new InitDataThread(getActivity(),  mHandler, page, Key.UP_VIDEO_DATA).start();
                         isQuray = false;
                     } else {
                         gv_video_one.loadComplete();
@@ -177,7 +178,7 @@ public class VideoShowFragmentOne extends Fragment {
             @Override
             public void onRfreshData() {
                 if (isQuray) {
-                    new InitDataThread(getActivity(), mHandler, 1, Key.UP_VIDEO_UPDATE).start();
+                    new InitDataThread(getActivity(),  mHandler, 1, Key.UP_VIDEO_UPDATE).start();
                     isQuray = false;
                 } else {
                     gv_video_one.reflashComplete();

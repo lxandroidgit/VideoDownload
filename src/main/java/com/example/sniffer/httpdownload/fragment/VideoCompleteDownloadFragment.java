@@ -3,7 +3,6 @@ package com.example.sniffer.httpdownload.fragment;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.sniffer.httpdownload.R;
 import com.example.sniffer.httpdownload.adapter.VideoFileAdapter;
@@ -50,8 +48,8 @@ public class VideoCompleteDownloadFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        initData();
         super.onCreate(savedInstanceState);
+        initData();
     }
 
     private void initData() {
@@ -164,7 +162,7 @@ public class VideoCompleteDownloadFragment extends Fragment {
      * @return
      */
     public boolean showVideoFileSelect(boolean isShow) {
-        if (videoFileInfos.size() > 0) {
+        if (videoFileInfos != null && videoFileInfos.size() > 0) {
             adapter.isShowCheck(isShow);
             mItemShow = isShow;
             return true;
@@ -178,7 +176,9 @@ public class VideoCompleteDownloadFragment extends Fragment {
      * @param isSelect 选中或取消
      */
     public int selectVideoFileAll(boolean isSelect) {
-        mCount = videoFileInfos.size();
+        if (videoFileInfos != null) {
+            mCount = videoFileInfos.size();
+        }
         if (mCount > 0) {
             for (VideoFileInfo videoFileInfo : videoFileInfos) {
                 videoFileInfo.setIsSelect(isSelect);

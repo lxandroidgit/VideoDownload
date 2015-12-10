@@ -12,6 +12,7 @@ import com.example.sniffer.httpdownload.bean.VideoDownInfo;
 import com.example.sniffer.httpdownload.dao.VideoUrlDao;
 import com.example.sniffer.httpdownload.read.HomeReadUrlThread;
 import com.example.sniffer.httpdownload.read.VideoResourcesReadThread;
+import com.example.sniffer.httpdownload.utils.Key;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class InitDataThread extends Thread {
     private List<String> listStr;
     private List<VideoDownInfo> list;
-    private Context context;
+    private List<VideoDownInfo> tempList;
     private ThreadPoolExecutor executor;
     private Handler mHandler;
     private int number;
@@ -34,19 +35,20 @@ public class InitDataThread extends Thread {
     private VideoUrlDao videoUrlDao;
 
     public InitDataThread(Context context, Handler mHandler, int number, int MsgWhat) {
-        this.context = context;
         listStr = new ArrayList<>();
         this.mHandler = mHandler;
         this.number = number;
         this.MsgWhat = MsgWhat;
         list = new ArrayList<>();
+        tempList = new ArrayList<>();
         mFlag = false;
         videoUrlDao = new VideoUrlDao(context);
     }
 
     @Override
     public void run() {
-        final String url = "http://www.99rr3.com/latest-updates/" + number + "/";
+        final String url = Key.VIDEO_ALL_URL + "/latest-updates/" + number + "/";
+        Log.i(getClass() + "", "url:" + url);
         new HomeReadUrlThread(url, listStr).start();
         try {
             sleep(2000);
@@ -65,17 +67,23 @@ public class InitDataThread extends Thread {
                     return;
                 }
             }
-            for (VideoDownInfo videoDownInfo : list) {
+            for (VideoDownInfo videoDownInfo : tempList) {
                 if (!videoUrlDao.findVideoUrl(videoDownInfo.getVideoMp4Url())) {
                     videoUrlDao.addVideoUrl(videoDownInfo);
-                    Log.e("数据库查询", "name:" + videoDownInfo.getVideoName() + "--mp4Url:" +
-                            videoDownInfo.getVideoMp4Url() + "--ImageUrl:" + videoDownInfo.getVideoImageUrl() +
-                            "--Time" + videoDownInfo.getTime());
+                    Log.e("数据库查询", "name:" + videoDownInfo.getVideoName() + ",mp4Url:" +
+                            videoDownInfo.getVideoMp4Url() + ",ImageUrl:" + videoDownInfo.getVideoImageUrl() +
+                            ",Time" + videoDownInfo.getTime());
+                    list.add(videoDownInfo);
                 }
+            }
+            for (VideoDownInfo videoDownInfo : list) {
+                videoDownInfo.setVideoMp4Url(Key.VIDEO_ALL_URL + videoDownInfo.getVideoMp4Url());
+                videoDownInfo.setVideoImageUrl(Key.VIDEO_ALL_URL + videoDownInfo.getVideoImageUrl());
             }
             Log.i("初始化", "读取网址关闭......");
             executor.shutdownNow();
         }
+        Key.totalnumber = Key.totalnumber + list.size();
         Message msg = mHandler.obtainMessage();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", (Serializable) list);
@@ -96,11 +104,10 @@ public class InitDataThread extends Thread {
             executor.execute(new VideoResourcesReadThread(listStr.get(i), new VideoResourcesReadThread.addVideo() {
                 @Override
                 public void addvideo(VideoDownInfo videoDownInfo) {
-                    list.add(videoDownInfo);
+                    tempList.add(videoDownInfo);
                 }
             }));
         }
-
     }
 
     public static boolean isEndThread() {

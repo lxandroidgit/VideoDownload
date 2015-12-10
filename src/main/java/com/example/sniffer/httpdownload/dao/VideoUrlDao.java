@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.sniffer.httpdownload.bean.VideoDownInfo;
 import com.example.sniffer.httpdownload.db.VideoUrlDB;
+import com.example.sniffer.httpdownload.utils.Key;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,8 @@ public class VideoUrlDao {
         while (cursor.moveToNext()) {
             VideoDownInfo videoDownInfo = new VideoDownInfo();
             videoDownInfo.setVideoName(cursor.getString(1));
-            videoDownInfo.setVideoMp4Url(cursor.getString(2));
-            videoDownInfo.setVideoImageUrl(cursor.getString(3));
+            videoDownInfo.setVideoMp4Url(Key.VIDEO_ALL_URL + cursor.getString(2));
+            videoDownInfo.setVideoImageUrl(Key.VIDEO_ALL_URL + cursor.getString(3));
             videoDownInfo.setType(cursor.getInt(4));
             videoDownInfo.setTime(cursor.getInt(5));
             videoDownInfos.add(videoDownInfo);

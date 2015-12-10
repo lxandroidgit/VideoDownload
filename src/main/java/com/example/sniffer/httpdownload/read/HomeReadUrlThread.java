@@ -26,25 +26,25 @@ public class HomeReadUrlThread extends Thread {
 
     @Override
     public void run() {
-        synchronized (strlist) {
-            try {
-                Document doc = Jsoup.connect(url).get();
-                Elements links = doc.select("a[href]");
-                for (Element link : links) {
-                    String s = link.attr("class");
-                    if (s.equals("kt_imgrc")) {
-                        String str = link.attr("abs:href");
-                        // Log.i("解析","网址："+str);
-                        strlist.add(str);
-                    }
-                }
-                // System.out.println("href"+links);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            Document doc = Jsoup.connect(url).get();
+            Elements links = doc.select("a[href]");
+            analysisJiuJiuReVideoHtml(links);
+            // System.out.println("href"+links);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
+    private void analysisJiuJiuReVideoHtml(Elements elements) {
+        for (Element link : elements) {
+            String s = link.attr("class");
+            if (s.equals("kt_imgrc")) {
+                String str = link.attr("abs:href");
+                 //Log.i("解析", "网址：" + str);
+                strlist.add(str);
+            }
+        }
     }
 
 }

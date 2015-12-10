@@ -22,4 +22,6 @@ public class Key {
     public static final int UP_VIDEO_UPDATE = 1;
     public static final int IMAGE_CACHE_SIZE = 100000000;
     public static int totalnumber;
+    public static String VIDEO_ALL_URL;
+    public static final String VIDEO_HOME = "http://www.99rr1.com/";
 }

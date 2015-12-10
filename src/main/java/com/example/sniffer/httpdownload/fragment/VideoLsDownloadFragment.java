@@ -15,13 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.sniffer.httpdownload.R;
-import com.example.sniffer.httpdownload.activity.DownloadListActivity;
 import com.example.sniffer.httpdownload.adapter.DownloadTaskAdapter;
 import com.example.sniffer.httpdownload.bean.VideoDownInfo;
-import com.example.sniffer.httpdownload.bean.VideoFileInfo;
 import com.example.sniffer.httpdownload.dao.FileDownloadInfoDao;
 import com.example.sniffer.httpdownload.dao.FileDownloadProgressDao;
-import com.example.sniffer.httpdownload.service.DownloadService;
 import com.example.sniffer.httpdownload.utils.Key;
 
 import java.util.ArrayList;
@@ -133,7 +130,9 @@ public class VideoLsDownloadFragment extends Fragment {
      * 全部选中或取消
      */
     public int selectCheckAll(boolean isSelect) {
-        mCount = videoDownInfos.size();
+        if (videoDownInfos != null) {
+            mCount = videoDownInfos.size();
+        }
         if (mCount > 0) {
             for (VideoDownInfo videoDownInfo : videoDownInfos) {
                 videoDownInfo.setIsCheck(isSelect);
@@ -154,7 +153,7 @@ public class VideoLsDownloadFragment extends Fragment {
      * @return
      */
     public boolean showVideoFileSelect(boolean isShow) {
-        if (videoDownInfos.size() > 0) {
+        if (videoDownInfos != null && videoDownInfos.size() > 0) {
             adapter.isShowCheck(isShow);
             mItemShow = isShow;
             return true;

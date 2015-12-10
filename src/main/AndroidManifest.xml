@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sniffer.httpdownload">
+<manifest package="com.example.sniffer.httpdownload"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".utils.MyApp"
@@ -16,18 +16,21 @@
         <activity
             android:name=".activity.ListMp4Activity"
             android:configChanges="orientation|screenSize"
-            android:theme="@android:style/Theme.Light.NoTitleBar">
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NoNetworkActivity" />
+        <activity android:name=".activity.NoNetworkActivity"/>
         <activity
-            android:configChanges="orientation|screenSize"
-            android:name=".activity.DownloadListActivity" />
+            android:name=".activity.DownloadListActivity"
+            android:configChanges="orientation"/>
 
-        <service android:name=".service.DownloadService" />
+        <service android:name=".service.DownloadService"/>
     </application>
 
 </manifest>

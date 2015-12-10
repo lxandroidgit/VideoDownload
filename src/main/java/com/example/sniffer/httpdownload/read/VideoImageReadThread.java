@@ -47,7 +47,7 @@ public class VideoImageReadThread {
         this.executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
         //获取最大可用内存
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
-        int imageCacheSize = maxMemory / 4;
+        int imageCacheSize = maxMemory / 8;
         mDrawableCache = new LruCache<String, Bitmap>(imageCacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap value) {

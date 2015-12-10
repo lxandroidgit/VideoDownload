@@ -62,7 +62,7 @@ public class VideoFileDownload extends Thread {
         //初始化数据库
         FileDownloadProgressDao.initializeInstance(context);
         dao = FileDownloadProgressDao.getDao();
-        mUrl = videoinfo.getVideoMp4Url();
+        mUrl =  videoinfo.getVideoMp4Url();
         String name = videoinfo.getVideoName();
         //构建保存文件
         file = new File(downloadPath, name + ".download");
@@ -179,7 +179,7 @@ public class VideoFileDownload extends Thread {
                             fileInfos.get(i).getThreadid(), fileInfos.get(i).getDatalength(),
                             fileInfos.get(i).getCompletelength(), fileInfos.get(i).getWriteCount(),
                             this, file, maxThread, LeftData);
-//                //线程池加入线程
+                    //                //线程池加入线程
                     newexecutor.execute(thread);
                     threads.add(thread);
                 }

@@ -2,7 +2,6 @@ package com.example.sniffer.httpdownload.download;
 
 import android.util.Log;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,6 @@ public class DownloadVideoThread extends Thread {
 
     public DownloadVideoThread(String mUrl, int threadid, int blocklength, int completelength,
                                int writeCount, VideoFileDownload downloader, File file, int maxthread, int LeftData) {
-        this.mUrl = mUrl;
         this.threadid = threadid;
         this.blocklength = blocklength;
         this.completelength = completelength;
@@ -40,6 +38,7 @@ public class DownloadVideoThread extends Thread {
         this.maxthread = maxthread;
         this.LeftData = LeftData;
         this.writeCount = writeCount;
+        this.mUrl =  mUrl;
         pause = new AtomicBoolean(false);
     }
 

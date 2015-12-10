@@ -59,6 +59,8 @@ public class VideoResourcesReadThread extends Thread {
             String name = alt.attr("alt");
             String image = alt.attr("src");
             System.out.println("一行：" + name + videourl + image);
+            videourl = videourl.substring(videourl.indexOf("/get_file"));
+            image = image.substring(image.indexOf("/contents"));
             VideoDownInfo videoinfo = new VideoDownInfo(name, image, videourl, 1);
             add.addvideo(videoinfo);
         } catch (IOException e) {

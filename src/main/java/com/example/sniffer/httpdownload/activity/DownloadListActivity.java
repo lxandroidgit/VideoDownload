@@ -48,10 +48,14 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
     private ViewPagerIndicator download_list_indicator;
     private VideoCompleteDownloadFragment completeFragment;
     private Fragment fragment;
+    private boolean isPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            isPosition = savedInstanceState.getBoolean("isPosition");
+        }
         setContentView(R.layout.activity_download_list);
         initUI();
         initData();
@@ -63,18 +67,18 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
      */
     private void initData() {
         fm = getSupportFragmentManager();
-        showLsDownload();
-
+        Log.e("list", "completeFragment");
+        showDownloadFragment(isPosition);
         Intent intent = new Intent(DownloadListActivity.this, DownloadService.class);
         bindService(intent, downloadConnection, Context.BIND_AUTO_CREATE);
-
     }
 
     /**
      * 初始化UI
      */
+
     private void initUI() {
-//      lv_download_task = (ListView) findViewById(R.id.lv_download_task);
+        //      lv_download_task = (ListView) findViewById(R.id.lv_download_task);
         iv_show_off = (ImageView) findViewById(R.id.iv_show_off);
         tv_show_on = (TextView) findViewById(R.id.tv_show_on);
         btn_selectAll = (Button) findViewById(R.id.btn_selectAll);
@@ -90,16 +94,41 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
 
         download_list_indicator.setOnClickTextListener(new ViewPagerIndicator.onClickText() {
             @Override
-            public void onClickLeftText() {
-                showLsDownload();
+            public void onClickLeftText(boolean position) {
+                showDownloadFragment(position);
             }
 
             @Override
-            public void onClickRightText() {
-                showCompleteDownload();
-
+            public void onClickRightText(boolean position) {
+                showDownloadFragment(position);
             }
         });
+    }
+
+    /**
+     * 显示Fragment
+     */
+    private void showDownloadFragment(boolean Position) {
+        isPosition = Position;
+        Log.e("showDownloadFragment", isPosition + "");
+        FragmentTransaction fmbt = fm.beginTransaction();
+        if (isPosition) {
+            if (completeFragment == null) {
+                completeFragment = new VideoCompleteDownloadFragment();
+                completeFragment.setCompleteTextmCountListener(this);
+            }
+            fmbt.replace(R.id.ll_download_task, completeFragment);
+            fragment = completeFragment;
+        } else {
+            if (lsFragment == null) {
+                lsFragment = new VideoLsDownloadFragment();
+                lsFragment.setLsTextmCountListener(this);
+            }
+            fmbt.replace(R.id.ll_download_task, lsFragment);
+            fragment = lsFragment;
+        }
+        fmbt.commit();
+        hideDelete();
     }
 
 
@@ -225,7 +254,6 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
             btn_delete.setTextColor(Color.RED);
             btn_delete.setText("删除(" + count + ")");
         }
-
     }
 
     /**
@@ -299,6 +327,7 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
     /**
      * Item单击后回调
      * 改变删除TextView的数量及颜色
+     *
      * @param mCount
      */
     @Override
@@ -314,6 +343,7 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
     /**
      * Item单击后回调
      * 启动下载任务
+     *
      * @param videoDownInfo
      */
     @Override
@@ -335,5 +365,11 @@ public class DownloadListActivity extends FragmentActivity implements View.OnCli
                 lsFragment.updataFragmentState(mp4Url, Key.DOWNLOAD_STATE_PAUSE);
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("isPosition", isPosition);
+        super.onSaveInstanceState(outState);
     }
 }

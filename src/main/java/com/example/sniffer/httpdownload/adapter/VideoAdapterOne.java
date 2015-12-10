@@ -64,7 +64,7 @@ public class VideoAdapterOne extends MyBaseAdapter<VideoDownInfo> {
         //     mInfoAsyncTask.showVideoSize(hanler.tv_downsize, mp4Url);
         mSizeThread.getVideoSize(tv_downsize, mp4Url);
         tv_dataname.setText(videoDownInfo.getVideoName());
-        String imageUrl = videoDownInfo.getVideoImageUrl();
+        String imageUrl =  videoDownInfo.getVideoImageUrl();
         iv_down.setTag(imageUrl);
         iv_down.setBackgroundResource(R.mipmap.ic_launcher);
         //mInfoAsyncTask.showVideoDrawable(iv_down, imageUrl);
